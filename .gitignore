@@ -10,10 +10,6 @@ npm-debug.*
 *.orig.*
 web-build/
 .vscode/
-<<<<<<< HEAD
-=======
-assets/
->>>>>>> de764e9b03f932fc725fe45d415a7d5756c5ab18
 backup/
 
 # macOS
