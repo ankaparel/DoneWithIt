@@ -52,7 +52,9 @@ function AccountScreen({ navigation }) {
                   backgroundColor={item.icon.backgroundColor}
                 />
               }
-              onPress={() => navigation.navigate(item.targetScreen)}
+              onPress={() => {
+                if (item.targetScreen) navigation.navigate(item.targetScreen)
+              }}
             />
           )}
         />

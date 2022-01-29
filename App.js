@@ -25,37 +25,21 @@ export default function App() {
 
   // if (!isReady)
   //   return (
-  //     // <AppLoading startAsync={restoreUser} onFinish={() => setIsReady(true)} />
+  //     <AppLoading startAsync={restoreUser} onFinish={() => setIsReady(true)} />
   //   );
 
   return (
     <AuthContext.Provider value={{ user, setUser }}>
       <OfflineNotice />
-      <NavigationContainer ref={navigationRef} theme={navigationTheme}>
+      <NavigationContainer 
+        screenOptions={{
+          headerShown: 'none'
+        }}
+        ref={navigationRef} 
+        theme={navigationTheme}
+      >
         {user ? <AppNavigator /> : <AuthNavigator />}
       </NavigationContainer>
     </AuthContext.Provider>
   );
 }
-
-
-// import { StatusBar } from 'expo-status-bar';
-// import { StyleSheet, Text, View } from 'react-native';
-
-// export default function App() {
-//   return (
-//     <View style={styles.container}>
-//       <Text>Open up App.js to start working on your app!</Text>
-//       <StatusBar style="auto" />
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });

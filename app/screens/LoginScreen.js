@@ -40,7 +40,7 @@ function LoginScreen(props) {
         <ErrorMessage
           error="Invalid email and/or password."
           visible={loginFailed}
-        />
+        />        
         <FormField
           autoCapitalize="none"
           autoCorrect={false}

@@ -1,7 +1,9 @@
 import * as SecureStore from "expo-secure-store";
 import jwtDecode from "jwt-decode";
 
-const key = "authToken";
+const key = 'authToken';
+const userToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYW5rYXBhcmVsQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMTIzNCJ9.2mPfanfj_CGk1JUcVeFgUn5YpXxXduaXTOGJn7NMgeg'
+
 
 const storeToken = async (authToken) => {
   try {
@@ -12,11 +14,12 @@ const storeToken = async (authToken) => {
 };
 
 const getToken = async () => {
-  try {
-    return await SecureStore.getItemAsync(key);
-  } catch (error) {
-    console.log("Error getting the auth token", error);
-  }
+  // try {
+  //   return await SecureStore.getItemAsync(key);
+  // } catch (error) {
+  //   console.log("Error getting the auth token", error);
+  // }
+  return userToken
 };
 
 const getUser = async () => {

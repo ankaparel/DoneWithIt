@@ -1,14 +1,17 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { getHeaderTitle } from '@react-navigation/elements';
 
 import AccountNavigator from "./AccountNavigator";
+// import AccountScreen from "../screens/AccountScreen";
 import FeedNavigator from "./FeedNavigator";
 import ListingEditScreen from "../screens/ListingEditScreen";
 import NewListingButton from "./NewListingButton";
 import routes from "./routes";
-import navigation from "./rootNavigation";
+// import navigate from "./rootNavigation";
 import useNotifications from "../hooks/useNotifications";
+import NavHeader from "../components/NavHeader";
 
 const Tab = createBottomTabNavigator();
 
@@ -16,7 +19,15 @@ const AppNavigator = () => {
   useNotifications();
 
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        header: ({ route, options }) => {
+          const title = getHeaderTitle(options, route.name);
+
+          return <NavHeader title={title} shown={title !== 'MyAccount'}/>;
+        }
+    }}    
+    >
       <Tab.Screen
         name="Feed"
         component={FeedNavigator}
@@ -29,7 +40,7 @@ const AppNavigator = () => {
       <Tab.Screen
         name="ListingEdit"
         component={ListingEditScreen}
-        options={({ navigation }) => ({
+        options={( { navigation } ) => ({
           tabBarButton: () => (
             <NewListingButton
               onPress={() => navigation.navigate(routes.LISTING_EDIT)}
@@ -45,9 +56,10 @@ const AppNavigator = () => {
         })}
       />
       <Tab.Screen
-        name="Account"
+        name="MyAccount"
         component={AccountNavigator}
         options={{
+          tabBarLabel: "Account",
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="account" color={color} size={size} />
           ),
