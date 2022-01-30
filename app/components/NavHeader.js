@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingVertical: 15,
     fontSize: 20,
-    fontWeight: '500',
+    fontWeight: '700',
   }
 });
 
