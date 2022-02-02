@@ -1,11 +1,16 @@
 import React from "react";
 import Constants from "expo-constants";
-import { StyleSheet, SafeAreaView, View } from "react-native";
+import { StyleSheet, SafeAreaView, View, KeyboardAvoidingView } from "react-native";
 
 function Screen({ children, style }) {
   return (
     <SafeAreaView style={[styles.screen, style]}>
-      <View style={[styles.view, style]}>{children}</View>
+      <KeyboardAvoidingView
+        behavior="padding"    // or "height" for android
+        style={{flex: 1}}
+      >
+        <View style={[styles.view, style]}>{children}</View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }

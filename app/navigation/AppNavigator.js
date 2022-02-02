@@ -24,7 +24,7 @@ const AppNavigator = () => {
         header: ({ route, options }) => {
           const title = getHeaderTitle(options, route.name);
 
-          return <NavHeader title={title} shown={title !== 'MyAccount'}/>;
+          return <NavHeader title={title} visible={title !== 'MyAccount'}/>;
         }
     }}    
     >

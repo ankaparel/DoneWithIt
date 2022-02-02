@@ -1,14 +1,17 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
+const { port, localDB, atlasDB  } = require('./config/config');
 const items = require('./routes/items');
 // const items = require('./data');
+const auth = require('./routes/auth');
+const verifyToken = require('./routes/verifyToken');
 
 const app = express();
 
-let localDB, atlasDB;
-localDB = 'mongodb://localhost:27017/donewithit?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false';
-// atlasDB = 'mongodb+srv://dwi_master:nWCizgbpaXoIxTSQ@cluster0.swybl.mongodb.net/dwi_db?retryWrites=true&w=majority';
+const db = localDB;
+// const db = atlasDB;
+const connectedOk = `${db === localDB ? 'Local':'Atlas'} server is running on port ${port}`;
 
 app.use(express.json());
 
@@ -16,16 +19,13 @@ app.get('/', (req, res) => {
     res.send('Welcome to express server');
 })
 
-app.use('/api/listings', items);
+app.use('/api/listings', verifyToken, items);
+app.use('/api/auth', auth);
 
-require('dotenv').config();
-
-const port = process.env.PORT || 3000;
-
-mongoose.connect(localDB ? localDB : atlasDB)
+mongoose.connect(db)
     .then(result => {
         app.listen(port, () => 
-            console.log(`${localDB ? 'Local':'Atlas'} server is running on port ${port}`))
+            console.log(connectedOk))
     })
     .catch(err => console.log(err))
 

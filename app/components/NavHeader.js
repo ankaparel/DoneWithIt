@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 
-function NavHeader( { title, shown } ) {
+function NavHeader( { title, visible } ) {
   return (
     <View style={styles.container}>
-        {shown && <Text style={styles.header}>{title}</Text>}
+        {visible && <Text style={styles.header}>{title}</Text>}
     </View>
   );
 }
