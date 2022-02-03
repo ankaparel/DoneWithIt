@@ -1,11 +1,10 @@
 {
   "expo": {
-    "name": "DoneWithIt",
-    "slug": "DoneWithIt",
+    "name": "My DWI App",
+    "slug": "my-dwi-app",
     "platforms": [
       "ios",
-      "android",
-      "web"
+      "android"
     ],
     "version": "1.0.0",
     "orientation": "portrait",
@@ -23,11 +22,11 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.codewithmosh.donewithit",
+      "bundleIdentifier": "com.ankapweb.mydwiapp",
       "buildNumber": "1.0.0"
     },
     "android": {
-      "package": "com.codewithmosh.donewithit",
+      "package": "com.ankapweb.mydwiapp",
       "versionCode": 1
     },
     "description": "A marketplace for selling the stuff you don't need anymore.",
