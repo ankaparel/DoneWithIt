@@ -16,7 +16,7 @@ const targetDB = db
     .replace('<user>', `${dbUser}`)
     .replace('<pwd>', `${dbPwd}`)
     .replace('<db>', `${dbName}`);
-console.log('targetDB => ' + targetDB)
+// console.log('targetDB => ' + targetDB)
 
 const connectedOk = `${targetDB === localDB ? 'Local':'Atlas'} server is running on port ${port}`;
 
@@ -35,9 +35,4 @@ mongoose.connect(targetDB)
     })
     .catch(err => console.log(err))
 
-// app.post('/api/auth', (req, res) => {
-//     const user = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYW5rYXBhcmVsQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMTIzNCJ9.2mPfanfj_CGk1JUcVeFgUn5YpXxXduaXTOGJn7NMgeg'
-
-//     res.send(user);
-// })
 
