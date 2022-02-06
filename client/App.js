@@ -11,10 +11,10 @@ import AuthNavigator from "./app/navigation/AuthNavigator";
 import AuthContext from "./app/auth/context";
 import authStorage from "./app/auth/storage";
 import { navigationRef } from "./app/navigation/rootNavigation";
-import logger from "./app/utility/logger";
+// import logger from "./app/utility/logger";
 // import store from './app/redux/store';
 
-logger.start()
+// logger.start()
 
 export default function App() {
   const [user, setUser] = useState();

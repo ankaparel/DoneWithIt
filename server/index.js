@@ -30,8 +30,7 @@ app.use('/api/auth', auth);
 
 mongoose.connect(targetDB)
     .then(result => {
-        app.listen(port, () => 
-            console.log(connectedOk))
+        app.listen(port, () => console.log(connectedOk))
     })
     .catch(err => console.log(err))
 
