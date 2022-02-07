@@ -36,13 +36,35 @@ function AccountScreen({ navigation }) {
   const [playbackStatus, setPlaybackStatus] = useState(null);  
   const [playUrl, setPlayUrl] = useState('http://in.icss.com.gr:8000/stream_028');
 
+  // initialize Audit settings & release sound when exit
+  useEffect(async () => {
+    console.log('Sound initiation');
+    await Audio.setAudioModeAsync({
+      allowsRecordingIOS: false,
+      staysActiveInBackground: true,
+      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+      playsInSilentModeIOS: true,
+      shouldDuckAndroid: true,
+      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+    });
+    
+    return () => {
+      if (playbackObject !== null) {
+        playbackObject.pauseAsync();
+        playbackObject.unloadAsync();
+        console.log('Sound released')
+      }
+    }
+  }, []);
+
+  // change sound when playUrl is changed
   const handleChangeStream = () => {
     const streamNo = Math.floor(Math.random() * 16) + 1;
     const url = `https://www.soundhelix.com/examples/mp3/SoundHelix-Song-${streamNo}.mp3`;
     setPlayUrl(url);
   }
 
-  // change sound when playUrl changed
+  // change sound when playUrl have been updated
   useEffect(async () => {
     console.log('new url=', playUrl)
     if (playbackObject !== null && playbackStatus === null) {
@@ -69,30 +91,34 @@ function AccountScreen({ navigation }) {
     );
     setIsPlaying(isPlaying);
     setPlaybackStatus(status);
-    
+    console.log('end of playUrl hook')
   }, [playUrl])
     
-    
-  // release sound when exit
+  // change between play-pause of a sound
+  // when playing status have been changed
   useEffect(async () => {
-    await Audio.setAudioModeAsync({
-      allowsRecordingIOS: false,
-      staysActiveInBackground: true,
-      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-      playsInSilentModeIOS: true,
-      shouldDuckAndroid: true,
-      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-    });
-    
-    return () => {
-      if (playbackObject !== null) {
-        playbackObject.pauseAsync();
-        playbackObject.unloadAsync();
-        console.log('Sound released')
-      }
+    if (playbackStatus === null) {
+      console.log('isPlaying bypassed')
+      return
     }
-  }, []);
-   
+
+    if (isPlaying) {
+      // It will resume our audio
+      console.log('isPlaying true')
+      const status = await playbackObject.playAsync();
+      setPlaybackStatus(status);
+      
+    } else {
+      // It will pause our audio
+      console.log('isPlaying false')
+      const status = await playbackObject.pauseAsync();
+      setPlaybackStatus(status);
+      
+    }
+
+  }, [isPlaying]);
+
+  // handles play/pause button press 
   const handleAudioPlayPause = async () => {
     if (playbackObject !== null && playbackStatus === null) {
       console.log('should not pass.....')
@@ -105,26 +131,24 @@ function AccountScreen({ navigation }) {
       //   interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
       // });
 
-      const status = await playbackObject.loadAsync(
-        { uri: playUrl },
-        { shouldPlay: true }
-      );
-      setIsPlaying(true);
-      return setPlaybackStatus(status);
+      // const status = await playbackObject.loadAsync(
+      //   { uri: playUrl },
+      //   { shouldPlay: true }
+      // );
+      // setPlaybackStatus(status);
+      return setIsPlaying(true);
     }
 
     // It will pause our audio
     if (playbackStatus.isPlaying) {
-      const status = await playbackObject.pauseAsync();
-      setIsPlaying(false);
-      return setPlaybackStatus(status);
+      console.log('set isPlaying to false')
+      return setIsPlaying(false);
     }
 
     // It will resume our audio
     if (!playbackStatus.isPlaying) {
-      const status = await playbackObject.playAsync();
-      setIsPlaying(true);
-      return setPlaybackStatus(status);
+      console.log('set isPlaying to true')
+      return setIsPlaying(true);
     }
   };  
 
