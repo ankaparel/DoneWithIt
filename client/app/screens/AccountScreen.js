@@ -140,13 +140,13 @@ function AccountScreen({ navigation }) {
     }
 
     // It will pause our audio
-    if (playbackStatus.isPlaying) {
+    if (isPlaying) {
       console.log('set isPlaying to false')
       return setIsPlaying(false);
     }
 
     // It will resume our audio
-    if (!playbackStatus.isPlaying) {
+    if (!isPlaying) {
       console.log('set isPlaying to true')
       return setIsPlaying(true);
     }
